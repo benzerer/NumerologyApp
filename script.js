@@ -110,27 +110,27 @@ function checkIsoCorner(mlist) {
 
 function getTraitAndOilImages(lifePathNumber, mlist) {
     const traitImages = {
-        1: 'images/traitimage1.png',
-        2: 'images/traitimage2.png',
-        3: 'images/traitimage3.png',
-        4: 'images/traitimage4.png',
-        5: 'images/traitimage5.png',
-        6: 'images/traitimage6.png',
-        7: 'images/traitimage7.png',
-        8: 'images/traitimage8.png',
-        9: 'images/traitimage9.png',
+        1: 'images/traitimage1.jpg',
+        2: 'images/traitimage2.jpg',
+        3: 'images/traitimage3.jpg',
+        4: 'images/traitimage4.jpg',
+        5: 'images/traitimage5.jpg',
+        6: 'images/traitimage6.jpg',
+        7: 'images/traitimage7.jpg',
+        8: 'images/traitimage8.jpg',
+        9: 'images/traitimage9.jpg',
     };
 
     const oilImages = {
-        1: 'images/oilimage1.png',
-        2: 'images/oilimage2.png',
-        3: 'images/oilimage3.png',
-        4: 'images/oilimage4.png',
-        5: 'images/oilimage5.png',
-        6: 'images/oilimage6.png',
-        7: 'images/oilimage7.png',
-        8: 'images/oilimage8.png',
-        9: 'images/oilimage9.png',
+        1: 'images/oilimage1.jpg',
+        2: 'images/oilimage2.jpg',
+        3: 'images/oilimage3.jpg',
+        4: 'images/oilimage4.jpg',
+        5: 'images/oilimage5.jpg',
+        6: 'images/oilimage6.jpg',
+        7: 'images/oilimage7.jpg',
+        8: 'images/oilimage8.jpg',
+        9: 'images/oilimage9.jpg',
     };
 
     const additionalOils = [];
