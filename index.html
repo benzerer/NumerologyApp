@@ -9,9 +9,24 @@
         h2 { color: #333; }
         .result { margin-top: 20px; }
         img { max-width: 100%; height: auto; }
+
+        /* Grid Styling */
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .matrix-cell {
+            border: 1px solid #000;
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+
     <h1>Life Path Calculator</h1>
     <form id="calcForm">
         <label for="dob">Enter your date of birth:</label><br>

@@ -15,25 +15,25 @@ function calculateLifePath(dob) {
     const year = dobDate.getFullYear().toString();
 
     let s1 = 0, s2 = 0, s3 = 0;
-    let mlist = Array(10).fill(0).map(() => [0, 0, 0]);
+    let mlist = Array(10).fill(0);
 
     for (const char of day + month + year) {
         const digit = parseInt(char);
         s1 += digit;
-        mlist[digit][0] += 1;
+        mlist[digit] += 1;
     }
 
     for (const char of s1.toString()) {
         const digit = parseInt(char);
         s2 += digit;
-        mlist[digit][0] += 1;
+        mlist[digit] += 1;
     }
 
     if (s2 >= 10) {
         for (const char of s2.toString()) {
             const digit = parseInt(char);
             s3 += digit;
-            mlist[digit][0] += 1;
+            mlist[digit] += 1;
         }
     }
 
@@ -48,6 +48,9 @@ function generateResultHtml(lifePathNumber, masterNumber, mlist) {
     let resultHtml = `<h2>Results</h2>`;
     resultHtml += `<p>Life Path: ${lifePathNumber}</p>`;
     resultHtml += `<p>Master Number: ${masterNumber}</p>`;
+
+    // Generating the 3x3 matrix and adding it to the result
+    resultHtml += generateMatrixHtml(mlist);
 
     const have = checkPatterns(mlist, 'have');
     const missing = checkPatterns(mlist, 'missing');
@@ -78,6 +81,25 @@ function generateResultHtml(lifePathNumber, masterNumber, mlist) {
     return resultHtml;
 }
 
+function generateMatrixHtml(mlist) {
+    // Array that corresponds to the grid position in 3x3 layout
+    const matrix = [
+        3, 6, 9,
+        2, 5, 8,
+        1, 4, 7,
+    ];
+
+    let matrixHtml = `<div class="matrix">`;
+    matrix.forEach(index => {
+        // Display the number itself (index) and repeat it according to its count in mlist
+        matrixHtml += `<div class="matrix-cell">${index.toString().repeat(mlist[index])}</div>`;
+    });
+    matrixHtml += `</div>`;
+
+    return matrixHtml;
+}
+
+
 function checkPatterns(mlist, type) {
     const patterns = [
         { label: "Row 369", indices: [3, 6, 9] },
@@ -91,18 +113,18 @@ function checkPatterns(mlist, type) {
     ];
 
     return patterns.filter(pattern => {
-        return pattern.indices.every(index => type === 'have' ? mlist[index][0] > 0 : mlist[index][0] === 0);
+        return pattern.indices.every(index => type === 'have' ? mlist[index] > 0 : mlist[index] === 0);
     }).map(pattern => pattern.label);
 }
 
 function checkIsoCorner(mlist) {
     const isoCorner = [];
 
-    if (mlist[5][0] === 0) {
-        if (mlist[2][0] === 0 && mlist[4][0] === 0 && mlist[1][0] > 0) isoCorner.push("Isolated corner 1");
-        if (mlist[2][0] === 0 && mlist[6][0] === 0 && mlist[3][0] > 0) isoCorner.push("Isolated corner 3");
-        if (mlist[4][0] === 0 && mlist[8][0] === 0 && mlist[7][0] > 0) isoCorner.push("Isolated corner 7");
-        if (mlist[6][0] === 0 && mlist[8][0] === 0 && mlist[9][0] > 0) isoCorner.push("Isolated corner 9");
+    if (mlist[5] === 0) {
+        if (mlist[2] === 0 && mlist[4] === 0 && mlist[1] > 0) isoCorner.push("Isolated corner 1");
+        if (mlist[2] === 0 && mlist[6] === 0 && mlist[3] > 0) isoCorner.push("Isolated corner 3");
+        if (mlist[4] === 0 && mlist[8] === 0 && mlist[7] > 0) isoCorner.push("Isolated corner 7");
+        if (mlist[6] === 0 && mlist[8] === 0 && mlist[9] > 0) isoCorner.push("Isolated corner 9");
     }
 
     return isoCorner;
@@ -135,7 +157,7 @@ function getTraitAndOilImages(lifePathNumber, mlist) {
 
     const additionalOils = [];
     for (let i = 1; i <= 9; i++) {
-        if (mlist[i][0] === 0) {
+        if (mlist[i] === 0) {
             additionalOils.push(oilImages[i]);
         }
     }
@@ -146,4 +168,3 @@ function getTraitAndOilImages(lifePathNumber, mlist) {
         additionalOils: additionalOils
     };
 }
-
