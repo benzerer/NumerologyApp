@@ -110,27 +110,27 @@ function checkIsoCorner(mlist) {
 
 function getTraitAndOilImages(lifePathNumber, mlist) {
     const traitImages = {
-        1: 'https://lh3.google.com/u/1/d/1Tj8VS6eLOLJxNX_tvKBva4gv-6pcffSd=w632-h933-iv1',
-        2: 'https://lh3.google.com/u/1/d/15S0mdZdN9m_BxZH4IxswJ_XzOGWRjaS-=w632-h933-iv1',
-        3: 'https://lh3.google.com/u/1/d/17YG7Q7I2ayz0VOdMqkD2Qxib715ILpq9=w632-h933-iv1',
-        4: 'https://lh3.google.com/u/1/d/1fkSeI5znYW64rU8HuaHeOZQ-lIIL4uyn=w632-h933-iv1',
-        5: 'https://lh3.google.com/u/1/d/1jZZcP3KBPOJaYYuzpS4SJIGy6xItE02s=w632-h933-iv1',
-        6: 'https://lh3.google.com/u/1/d/17DJKlR2mav3EhPUh1RwJY68Ie4BjotYo=w632-h933-iv1',
-        7: 'https://lh3.google.com/u/1/d/1YLis-L2MZoe-BJ4N7hGsYUBNSUWwaRtl=w632-h933-iv1',
-        8: 'https://lh3.google.com/u/1/d/1OTa80LKu2t9x66X_C0jrbtR9GlNYNpbs=w632-h933-iv1',
-        9: 'https://lh3.google.com/u/1/d/1opjSFWMwLv0Tqhc1dSqakUKojWx6pca8=w632-h933-iv1'
+        1: 'images/traitimage1.png',
+        2: 'images/traitimage2.png',
+        3: 'images/traitimage3.png',
+        4: 'images/traitimage4.png',
+        5: 'images/traitimage5.png',
+        6: 'images/traitimage6.png',
+        7: 'images/traitimage7.png',
+        8: 'images/traitimage8.png',
+        9: 'images/traitimage9.png',
     };
 
     const oilImages = {
-        1: 'https://lh3.google.com/u/1/d/1EYLgqmKcbMCVQ4W2yBPZPiH2g-lcAYEU=w1920-h933-iv1',
-        2: 'https://lh3.google.com/u/1/d/1K3fG3aAf3CUj5XepCbDGrPnCSHgZ66ql=w632-h933-iv1',
-        3: 'https://lh3.google.com/u/1/d/1nW_UZE-Vi0awslJ0yJfD-lnDCpjiiutT=w1920-h901-iv1',
-        4: 'https://lh3.google.com/u/1/d/1oenpx2LMixJ4_ZRY91d8qSV3Yj27wScl=w1920-h901-iv1',
-        5: 'https://lh3.google.com/u/1/d/10neh1LQlXVR5s1DPn4f1uRNx-J7eiPqH=w1056-h901-iv1',
-        6: 'https://lh3.google.com/u/1/d/1HYvWINt7ZqOf21HtveZyiaZjAle-8aEx=w1056-h901-iv1',
-        7: 'https://lh3.google.com/u/1/d/15pe87_n2W1NKFPwNO7FfdL3gU8l5PESQ=w1056-h901-iv1',
-        8: 'https://lh3.google.com/u/1/d/19w41VyP5Alpk_sWwNMlG1tHHx8cyRufp=w1056-h901-iv1',
-        9: 'https://lh3.google.com/u/1/d/1loQpbKYK_N42LjyqDNTaBlnTChJkpzAv=w1056-h901-iv1'
+        1: 'images/oilimage1.png',
+        2: 'images/oilimage2.png',
+        3: 'images/oilimage3.png',
+        4: 'images/oilimage4.png',
+        5: 'images/oilimage5.png',
+        6: 'images/oilimage6.png',
+        7: 'images/oilimage7.png',
+        8: 'images/oilimage8.png',
+        9: 'images/oilimage9.png',
     };
 
     const additionalOils = [];
