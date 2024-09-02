@@ -49,8 +49,13 @@ function generateResultHtml(lifePathNumber, masterNumber, mlist) {
     resultHtml += `<p>Life Mission: ${lifePathNumber}</p>`;
     resultHtml += `<p>Master Number: ${masterNumber}</p>`;
 
-    // Generating the 3x3 matrix and adding it to the result
-    resultHtml += generateMatrixHtml(mlist);
+    // Generate the Life Matrix
+    resultHtml += `<div class="matrix">`;
+    const matrixOrder = [3, 6, 9, 2, 5, 8, 1, 4, 7];
+    matrixOrder.forEach(num => {
+        resultHtml += `<div class="matrix-cell">${mlist[num] > 0 ? num.toString().repeat(mlist[num]) : ''}</div>`;
+    });
+    resultHtml += `</div>`;
 
     const have = checkPatterns(mlist, 'have');
     const missing = checkPatterns(mlist, 'missing');
@@ -73,32 +78,17 @@ function generateResultHtml(lifePathNumber, masterNumber, mlist) {
     resultHtml += `<img src="${traitAndOilImages.traitImage}" alt="Trait image">`;
     resultHtml += `<img src="${traitAndOilImages.oilImage}" alt="Oil image">`;
 
-    resultHtml += `<p>Based on your life matrix, some of your numbers may be in excess, while others may be missing, your suggested oils are to use:</p>`;
+    const lifeJourney = generateLifeJourney(lifePathNumber, mlist);
+
+    resultHtml += `<h2>The following oils support your life journey: ${lifeJourney.join('')}</h2>`;
     traitAndOilImages.additionalOils.forEach(oilImage => {
         resultHtml += `<img src="${oilImage}" alt="Oil image">`;
     });
 
+    
+
     return resultHtml;
 }
-
-function generateMatrixHtml(mlist) {
-    // Array that corresponds to the grid position in 3x3 layout
-    const matrix = [
-        3, 6, 9,
-        2, 5, 8,
-        1, 4, 7,
-    ];
-
-    let matrixHtml = `<div class="matrix">`;
-    matrix.forEach(index => {
-        // Display the number itself (index) and repeat it according to its count in mlist
-        matrixHtml += `<div class="matrix-cell">${index.toString().repeat(mlist[index])}</div>`;
-    });
-    matrixHtml += `</div>`;
-
-    return matrixHtml;
-}
-
 
 function checkPatterns(mlist, type) {
     const patterns = [
@@ -168,3 +158,39 @@ function getTraitAndOilImages(lifePathNumber, mlist) {
         additionalOils: additionalOils
     };
 }
+
+function generateLifeJourney(lifePathNumber, mlist) {
+    const baseRow = [1, 4, 7];
+    const secondRow = [2, 5, 8];
+    const thirdRow = [3, 6, 9];
+
+    const lifeJourney = [lifePathNumber];
+
+    // Function to check missing numbers in a row and add them to the journey
+    const checkRow = (row) => {
+        row.forEach(num => {
+            if (lifeJourney.length < 4 && mlist[num] === 0 && lifeJourney.indexOf(num) === -1) {
+                lifeJourney.push(num);
+            }
+        });
+    };
+
+    // Start from the base row, then second row, then third row
+    checkRow(baseRow);
+    checkRow(secondRow);
+    checkRow(thirdRow);
+
+    // Check if there's a need for a support number from the second row if any number from the third row is present
+    thirdRow.forEach(num => {
+        if (lifeJourney.length < 4 && mlist[num] > 0 && lifeJourney.indexOf(num) === -1) {
+            const supportNumber = num - 1;
+            if (mlist[supportNumber] === 0 && lifeJourney.indexOf(supportNumber) === -1) {
+                lifeJourney.push(supportNumber);
+            }
+        }
+    });
+
+    // Ensure the life journey is limited to 4 digits
+    return lifeJourney.slice(0, 4);
+}
+
