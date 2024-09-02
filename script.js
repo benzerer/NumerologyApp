@@ -33,11 +33,11 @@ function calculateLifePath(dob) {
         for (const char of s2.toString()) {
             const digit = parseInt(char);
             s3 += digit;
-            mlist[digit] += 1;
         }
     }
 
     const lifePathNumber = s3 !== 0 ? s3 : s2;
+    mlist[lifePathNumber] += 1;
     const masterNumber = s1 % 11 === 0 ? s1 : "N/A";
 
     const resultHtml = generateResultHtml(lifePathNumber, masterNumber, mlist);
@@ -73,7 +73,7 @@ function generateResultHtml(lifePathNumber, masterNumber, mlist) {
     resultHtml += `<img src="${traitAndOilImages.traitImage}" alt="Trait image">`;
     resultHtml += `<img src="${traitAndOilImages.oilImage}" alt="Oil image">`;
 
-    resultHtml += `<p>Based on your life matrix, some of your numbers may be overemphasized, while some may be missing, your suggested oils to use:</p>`;
+    resultHtml += `<p>Based on your life matrix, some of your numbers may be in excess, while others may be missing, your suggested oils are to use:</p>`;
     traitAndOilImages.additionalOils.forEach(oilImage => {
         resultHtml += `<img src="${oilImage}" alt="Oil image">`;
     });
