@@ -46,7 +46,7 @@ function calculateLifePath(dob) {
 
 function generateResultHtml(lifePathNumber, masterNumber, mlist) {
     let resultHtml = `<h2>Results</h2>`;
-    resultHtml += `<p>Life Path: ${lifePathNumber}</p>`;
+    resultHtml += `<p>Life Mission: ${lifePathNumber}</p>`;
     resultHtml += `<p>Master Number: ${masterNumber}</p>`;
 
     // Generating the 3x3 matrix and adding it to the result
@@ -69,7 +69,7 @@ function generateResultHtml(lifePathNumber, masterNumber, mlist) {
     }
 
     const traitAndOilImages = getTraitAndOilImages(lifePathNumber, mlist);
-    resultHtml += `<p>Based on your life path number, your traits and suggested oils to use:</p>`;
+    resultHtml += `<p>The following traits and suggested oils can support your life mission:</p>`;
     resultHtml += `<img src="${traitAndOilImages.traitImage}" alt="Trait image">`;
     resultHtml += `<img src="${traitAndOilImages.oilImage}" alt="Oil image">`;
 
