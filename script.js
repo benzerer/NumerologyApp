@@ -2,13 +2,13 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const dob = document.getElementById('dob').value;
     if (dob) {
-        calculateLifePath(dob);
+        calculateLifeMission(dob);
     } else {
         alert('Please enter a valid date of birth.');
     }
 });
 
-function calculateLifePath(dob) {
+function calculateLifeMission(dob) {
     const dobDate = new Date(dob);
     const day = dobDate.getDate().toString().padStart(2, '0');
     const month = (dobDate.getMonth() + 1).toString().padStart(2, '0');
@@ -36,18 +36,18 @@ function calculateLifePath(dob) {
         }
     }
 
-    const lifePathNumber = s3 !== 0 ? s3 : s2;
-    mlist[lifePathNumber] += 1;
+    const lifeMissionNumber = s3 !== 0 ? s3 : s2;
+    mlist[lifeMissionNumber] += 1;
     const masterNumber = s1 % 11 === 0 ? s1 : "N/A";
 
-    const resultHtml = generateResultHtml(lifePathNumber, masterNumber, mlist);
+    const resultHtml = generateResultHtml(lifeMissionNumber, masterNumber, mlist);
     document.getElementById('result').innerHTML = resultHtml;
 }
 
-function generateResultHtml(lifePathNumber, masterNumber, mlist) {
+function generateResultHtml(lifeMissionNumber, masterNumber, mlist) {
     let resultHtml = `<h2>Results</h2>`;
-    resultHtml += `<p>Life Mission: ${lifePathNumber}</p>`;
     resultHtml += `<p>Master Number: ${masterNumber}</p>`;
+    resultHtml += `<p>Life Mission: ${lifeMissionNumber}</p>`;
 
     // Generate the Life Matrix
     resultHtml += `<div class="matrix">`;
@@ -73,19 +73,28 @@ function generateResultHtml(lifePathNumber, masterNumber, mlist) {
         resultHtml += `<p>You have:</p><ul>${isoCorner.map(item => `<li>${item}</li>`).join('')}</ul>`;
     }
 
-    const traitAndOilImages = getTraitAndOilImages(lifePathNumber, mlist);
-    resultHtml += `<p>The following traits and suggested oils can support your life mission:</p>`;
-    resultHtml += `<img src="${traitAndOilImages.traitImage}" alt="Trait image">`;
-    resultHtml += `<img src="${traitAndOilImages.oilImage}" alt="Oil image">`;
+    const lifeJourney = generateLifeJourney(lifeMissionNumber, mlist);
+    const traitAndOilImages = getTraitAndOilImages(lifeJourney, lifeMissionNumber, mlist);
 
-    const lifeJourney = generateLifeJourney(lifePathNumber, mlist);
+    // Show Life Mission Trait and Oil Image first
+    resultHtml += `<h2>Your Potential Strengths and Weaknesses are:</h2>`;
+    resultHtml += `<img src="${traitAndOilImages.traitImage}" alt="Trait image for Life Mission">`;
+    resultHtml += `<img src="${traitAndOilImages.oilImages[lifeMissionNumber]}" alt="Oil image for Life Mission">`;
 
-    resultHtml += `<h2>The following oils support your life journey: ${lifeJourney.join('')}</h2>`;
-    traitAndOilImages.additionalOils.forEach(oilImage => {
-        resultHtml += `<img src="${oilImage}" alt="Oil image">`;
+    // Show oils for the life journey next (limited to 4 oils)
+    resultHtml += `<h2>The Following Oils Support Your Life Journey: ${lifeJourney}</h2>`;
+    lifeJourney.forEach(num => {
+        resultHtml += `<img src="${traitAndOilImages.oilImages[num]}" alt="Oil image for Life Journey number ${num}">`;
     });
 
-    
+    // Display excess/over-emphasized numbers and their oils (numbers with 3 or more occurrences)
+    const excessNumbers = getExcessNumbers(mlist);
+    if (excessNumbers.length > 0) {
+        resultHtml += `<h2>Excess/Over-emphasized Numbers and their Oils:</h2>`;
+        excessNumbers.forEach(num => {
+            resultHtml += `<img src="${traitAndOilImages.oilImages[num]}" alt="Oil image for Excess number ${num}">`;
+        });
+    }
 
     return resultHtml;
 }
@@ -120,7 +129,7 @@ function checkIsoCorner(mlist) {
     return isoCorner;
 }
 
-function getTraitAndOilImages(lifePathNumber, mlist) {
+function getTraitAndOilImages(lifeJourney, lifeMissionNumber, mlist) {
     const traitImages = {
         1: 'images/traitimage1.jpg',
         2: 'images/traitimage2.jpg',
@@ -145,26 +154,18 @@ function getTraitAndOilImages(lifePathNumber, mlist) {
         9: 'images/oilimage9.jpg',
     };
 
-    const additionalOils = [];
-    for (let i = 1; i <= 9; i++) {
-        if (mlist[i] === 0) {
-            additionalOils.push(oilImages[i]);
-        }
-    }
-
     return {
-        traitImage: traitImages[lifePathNumber],
-        oilImage: oilImages[lifePathNumber],
-        additionalOils: additionalOils
+        traitImage: traitImages[lifeMissionNumber],  // Trait image for the Life Mission number
+        oilImages: oilImages  // Oil images for the Life Mission and Life Journey numbers
     };
 }
 
-function generateLifeJourney(lifePathNumber, mlist) {
+function generateLifeJourney(lifeMissionNumber, mlist) {
     const baseRow = [1, 4, 7];
     const secondRow = [2, 5, 8];
     const thirdRow = [3, 6, 9];
 
-    const lifeJourney = [lifePathNumber];
+    const lifeJourney = [lifeMissionNumber];
 
     // Function to check missing numbers in a row and add them to the journey
     const checkRow = (row) => {
@@ -182,15 +183,19 @@ function generateLifeJourney(lifePathNumber, mlist) {
 
     // Check if there's a need for a support number from the second row if any number from the third row is present
     thirdRow.forEach(num => {
-        if (lifeJourney.length < 4 && mlist[num] > 0 && lifeJourney.indexOf(num) === -1) {
-            const supportNumber = num - 1;
-            if (mlist[supportNumber] === 0 && lifeJourney.indexOf(supportNumber) === -1) {
+        if (lifeJourney.length < 4 && mlist[num] > 0 && mlist[baseRow.indexOf(num)] === 0) {
+            const supportNumber = secondRow[thirdRow.indexOf(num)];
+            if (!lifeJourney.includes(supportNumber)) {
                 lifeJourney.push(supportNumber);
             }
         }
     });
 
-    // Ensure the life journey is limited to 4 digits
-    return lifeJourney.slice(0, 4);
+    return lifeJourney.slice(0, 4);  // Limiting to 4 oils for the life journey
 }
 
+function getExcessNumbers(mlist) {
+    return mlist
+        .map((count, num) => (num >= 1 && num <= 9 && count >= 3) ? num : null)
+        .filter(num => num !== null);
+}
