@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Path Calculator</title>
+    <title>โปรแกรมคำนวนชะตาชีวิต</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; }
+        body { font-family: 'Kanit', sans-serif; text-align: center;}
         h2 { color: #333; font-size: large;}
-        .result { margin-top: 20px; }
-        img { max-width: 100%; height: auto; }
+        .result { margin-top: 20px; max-width: 768px; margin: auto; text-align: left; }
+        img { max-width: 768px; height: auto; }
 
         /* Grid Styling */
         .matrix {
@@ -18,8 +21,10 @@
         }
         .matrix-cell {
             border: 1px solid #000;
-            text-align: center;
-            padding: 10px;
+            height: 64px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 18px;
             font-weight: bold;
         }
@@ -27,14 +32,16 @@
 </head>
 <body>
 
-    <h1>Life Path Calculator</h1>
+    <h1>โปรแกรมคำนวนชะตาชีวิต</h1>
     <form id="calcForm">
-        <label for="dob">Enter your date of birth:</label><br>
+        <label for="dob">ระบุวัน เดือน ปีเกิดของคุณ:</label><br>
         <input type="date" id="dob" name="dob" required><br><br>
-        <button type="submit">Calculate</button>
+        <button type="submit">คำนวน</button>
     </form>
 
     <div class="result" id="result"></div>
+
+    Credit: <a href="https://github.com/JaymeChua/NumerologyApp">Mr.Chua</a>
 
     <script src="script.js"></script>
 </body>

@@ -4,7 +4,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     if (dob) {
         calculateLifeMission(dob);
     } else {
-        alert('Please enter a valid date of birth.');
+        alert('กรุณาระบุวันเดือนปีเกิดของคุณ');
     }
 });
 
@@ -45,9 +45,9 @@ function calculateLifeMission(dob) {
 }
 
 function generateResultHtml(lifeMissionNumber, masterNumber, mlist) {
-    let resultHtml = `<h2>Results</h2>`;
-    resultHtml += `<p>Master Number: ${masterNumber}</p>`;
-    resultHtml += `<p>Life Mission: ${lifeMissionNumber}</p>`;
+    let resultHtml = `<h2>ผลลัพธ์</h2>`;
+    resultHtml += `<p>Master Number (เลขหลัก): ${masterNumber}</p>`;
+    resultHtml += `<p>Life Mission (ภารกิจของชีวิต): ${lifeMissionNumber}</p>`;
 
     // Generate the Life Matrix
     resultHtml += `<div class="matrix">`;
@@ -62,27 +62,27 @@ function generateResultHtml(lifeMissionNumber, masterNumber, mlist) {
     const isoCorner = checkIsoCorner(mlist);
 
     if (have.length) {
-        resultHtml += `<p>You have:</p><ul>${have.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        resultHtml += `<p>คุณมี:</p><ul>${have.map(item => `<li>${item}</li>`).join('')}</ul>`;
     }
 
     if (missing.length) {
-        resultHtml += `<p>You are missing:</p><ul>${missing.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        resultHtml += `<p>คุณขาด:</p><ul>${missing.map(item => `<li>${item}</li>`).join('')}</ul>`;
     }
 
     if (isoCorner.length) {
-        resultHtml += `<p>You have:</p><ul>${isoCorner.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        resultHtml += `<p>คุณมี:</p><ul>${isoCorner.map(item => `<li>${item}</li>`).join('')}</ul>`;
     }
 
     const lifeJourney = generateLifeJourney(lifeMissionNumber, mlist);
     const traitAndOilImages = getTraitAndOilImages(lifeJourney, lifeMissionNumber, mlist);
 
     // Show Life Mission Trait and Oil Image first
-    resultHtml += `<h2>Your Potential Strengths and Weaknesses are:</h2>`;
+    resultHtml += `<h2>จุดแข็งและจุดอ่อนของคุณคือ:</h2>`;
     resultHtml += `<img src="${traitAndOilImages.traitImage}" alt="Trait image for Life Mission">`;
     resultHtml += `<img src="${traitAndOilImages.oilImages[lifeMissionNumber]}" alt="Oil image for Life Mission">`;
 
     // Show oils for the life journey next (limited to 4 oils)
-    resultHtml += `<h2>The Following Oils Support Your Life Journey: ${lifeJourney}</h2>`;
+    resultHtml += `<h2>น้ำมันหอมระเหยที่ช่วยเติมเต็มในเส้นทางชีวิตของคุณ: ${lifeJourney}</h2>`;
     lifeJourney.forEach(num => {
         resultHtml += `<img src="${traitAndOilImages.oilImages[num]}" alt="Oil image for Life Journey number ${num}">`;
     });
@@ -90,7 +90,7 @@ function generateResultHtml(lifeMissionNumber, masterNumber, mlist) {
     // Display excess/over-emphasized numbers and their oils (numbers with 3 or more occurrences)
     const excessNumbers = getExcessNumbers(mlist);
     if (excessNumbers.length > 0) {
-        resultHtml += `<h2>Excess/Over-emphasized Numbers and their Oils:</h2>`;
+        resultHtml += `<h2>เลขที่มีจำนวนมากเกินไป (ปรากฏมากกว่า 3 ครั้ง) และน้ำมันหอมระเหยที่เกี่ยวข้อง:</h2>`;
         excessNumbers.forEach(num => {
             resultHtml += `<img src="${traitAndOilImages.oilImages[num]}" alt="Oil image for Excess number ${num}">`;
         });
@@ -101,14 +101,14 @@ function generateResultHtml(lifeMissionNumber, masterNumber, mlist) {
 
 function checkPatterns(mlist, type) {
     const patterns = [
-        { label: "Row 369", indices: [3, 6, 9] },
-        { label: "Row 258", indices: [2, 5, 8] },
-        { label: "Row 147", indices: [1, 4, 7] },
-        { label: "Column 123", indices: [1, 2, 3] },
-        { label: "Column 456", indices: [4, 5, 6] },
-        { label: "Column 789", indices: [7, 8, 9] },
-        { label: "Diagonal 159", indices: [1, 5, 9] },
-        { label: "Diagonal 357", indices: [3, 5, 7] }
+        { label: "แถวแนวนอน 369", indices: [3, 6, 9] },
+        { label: "แถวแนวนอน 258", indices: [2, 5, 8] },
+        { label: "แถวแนวนอน 147", indices: [1, 4, 7] },
+        { label: "แถวแนวตั้ง 123", indices: [1, 2, 3] },
+        { label: "แถวแนวตั้ง 456", indices: [4, 5, 6] },
+        { label: "แถวแนวตั้ง 789", indices: [7, 8, 9] },
+        { label: "แนวทแยงมุม 159", indices: [1, 5, 9] },
+        { label: "แนวทแยงมุม 357", indices: [3, 5, 7] }
     ];
 
     return patterns.filter(pattern => {
@@ -120,10 +120,10 @@ function checkIsoCorner(mlist) {
     const isoCorner = [];
 
     if (mlist[5] === 0) {
-        if (mlist[2] === 0 && mlist[4] === 0 && mlist[1] > 0) isoCorner.push("Isolated corner 1");
-        if (mlist[2] === 0 && mlist[6] === 0 && mlist[3] > 0) isoCorner.push("Isolated corner 3");
-        if (mlist[4] === 0 && mlist[8] === 0 && mlist[7] > 0) isoCorner.push("Isolated corner 7");
-        if (mlist[6] === 0 && mlist[8] === 0 && mlist[9] > 0) isoCorner.push("Isolated corner 9");
+        if (mlist[2] === 0 && mlist[4] === 0 && mlist[1] > 0) isoCorner.push("มุมเลข 1 แยกจากเลขอื่น");
+        if (mlist[2] === 0 && mlist[6] === 0 && mlist[3] > 0) isoCorner.push("มุมเลข 3 แยกจากเลขอื่น");
+        if (mlist[4] === 0 && mlist[8] === 0 && mlist[7] > 0) isoCorner.push("มุมเลข 7 แยกจากเลขอื่น");
+        if (mlist[6] === 0 && mlist[8] === 0 && mlist[9] > 0) isoCorner.push("มุมเลข 9 แยกจากเลขอื่น");
     }
 
     return isoCorner;
